@@ -1,0 +1,26 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: devopsdays-demo
+spec:
+  schedule: "*/5 * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    metadata:
+      labels:
+        cronjob: devopsdays-demo
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            cronjob: devopsdays-demo
+        spec:
+          containers:
+          - name: devopsdays-demo
+            command:
+            - /bin/false
+            image: alpine
+          restartPolicy: Never
